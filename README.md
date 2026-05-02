@@ -70,16 +70,31 @@
 
 ## 🚀 快速开始
 
+### 方式一：作为 OpenClaw 技能安装（推荐）
+
+将此目录复制到 OpenClaw 的 `skills/` 目录下，即可作为技能使用：
+
 ```bash
-# 安装依赖
+# 复制到 OpenClaw skills 目录
+cp -r . /path/to/openclaw/skills/complete-self-evolution
+```
+
+在 OpenClaw 中即可使用完整自我进化功能。
+
+### 方式二：独立运行
+
+```bash
+# 1. 安装依赖
 npm install
 
-# 启动进化系统
+# 2. 启动进化系统
 npm start
 
-# 运行测试
-npm test
+# 3. 运行测试
+node tests/test_simple.js
 ```
+
+> ⚠️ 独立运行需要配置 A2A_NODE_ID 环境变量。
 
 ## 🗺️ 路线图
 
