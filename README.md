@@ -10,7 +10,7 @@
 |------|------|
 | 版本 | v4.0.0 |
 | 核心功能 | **105项** |
-| 源码文件 | 55个 |
+| 源码文件 | 24个 |
 | 技术栈 | JavaScript (Node.js ES Modules) |
 | 许可证 | Apache-2.0 |
 | 技能标准 | [agentskills.io](https://agentskills.io) |
