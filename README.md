@@ -139,4 +139,4 @@ node tests/test_simple.js
 
 ## 📝 License
 
-Apache-2.0
+[MIT](https://opensource.org/licenses/MIT)
