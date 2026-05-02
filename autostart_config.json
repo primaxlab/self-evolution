@@ -1,0 +1,12 @@
+{
+  "name": "OpenClaw-SelfEvolution-AutoStart",
+  "description": "OpenClaw Complete Self Evolution System - Auto Startup",
+  "script": "D:\\OpenClaw_Main\\workspace\\skills\\complete-self-evolution\\session_auto_start.js",
+  "env": {
+    "NODE_ENV": "production",
+    "AUTO_START": "true",
+    "PERSISTENCE": "true"
+  },
+  "autorestart": true,
+  "instances": 1
+}
