@@ -1,0 +1,73 @@
+{
+  "evolution": {
+    "a2aNodeId": "openclaw-prod-main-node-202604071130",
+    "strategy": "aggressive",
+    "riskAssessment": true,
+    "autoReflection": true,
+    "concurrency": 16,
+    "validationStrictness": "very_high",
+    "timeHorizon": ["1h", "6h", "1d", "1w", "1m"],
+    "rollbackMode": "soft",
+    "priorityStrategy": "impact_urgency_feasibility",
+    "workspacePath": "D:\\OpenClaw_Main\\workspace\\evolution_production",
+    "dataPath": "D:\\OpenClaw_Main\\workspace\\evolution_data",
+    "backupPath": "D:\\OpenClaw_Main\\workspace\\evolution_backups",
+    "logLevel": "debug",
+    "maxEvolutionHistory": 10000,
+    "autoBackupEnabled": true,
+    "realTimeMonitoring": true,
+    "performanceMetrics": true
+  },
+  "modules": {
+    "evolution": {
+      "enabled": true,
+      "maxConcurrentEvolutions": 12,
+      "timeoutMs": 900000,
+      "retryAttempts": 10
+    },
+    "prediction": {
+      "enabled": true,
+      "predictionHorizon": ["1h", "6h", "24h", "7d", "30d"],
+      "confidenceThreshold": 0.9
+    },
+    "improvement": {
+      "enabled": true,
+      "maxImprovementsPerCycle": 100,
+      "autoImplement": true,
+      "reviewRequired": false
+    },
+    "reflection": {
+      "enabled": true,
+      "depth": "deep",
+      "autoCorrect": true,
+      "validationStrictness": "strict"
+    }
+  },
+  "security": {
+    "encryptionEnabled": true,
+    "accessControl": "strict",
+    "auditLogging": true,
+    "dataRetentionDays": 365,
+    "autoPurge": true
+  },
+  "performance": {
+    "maxMemoryMb": 16384,
+    "maxCpuPercent": 95,
+    "monitoringIntervalMs": 1000,
+    "autoScale": true
+  },
+  "network": {
+    "evolveMapEnabled": true,
+    "nodeDiscovery": true,
+    "knowledgeSharing": true,
+    "updateFrequency": "15m"
+  },
+  "metadata": {
+    "version": "4.0.0-production-full",
+    "deploymentId": "openclaw-prod-full-202604071130",
+    "owner": "杨元强",
+    "created": "2026-04-07T11:30:00Z",
+    "lastUpdated": "2026-04-07T11:30:00Z",
+    "environment": "production"
+  }
+}
