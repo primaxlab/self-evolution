@@ -1,3 +1,14 @@
+---
+name: complete-self-evolution
+description: 完整自我进化系统 - 整合 evolver-main + self-evolution + self-improving-agent + auto-reflection，实现AI助手完全自治进化
+version: 4.0.0
+platforms: [macos, linux, windows]
+metadata:
+  hermes:
+    tags: [evolution, self-improvement, ai, automation, memory, personality]
+    category: ai-development
+---
+
 # 🧬 完整自我进化系统技能
 
 ## 🎯 技能描述（v4.0 - 完整整合版）
