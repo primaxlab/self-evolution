@@ -1,6 +1,8 @@
 # 🧬 完整自我进化系统 v4.0
 
 > 整合 evolver-main + self-evolution + self-improving-agent + auto-reflection，实现AI助手完全自治进化。
+> 
+> 兼容 [OpenClaw](https://openclaw.ai) 和 [Hermes Agent](https://hermes-agent.nousresearch.com) 两大平台。
 
 ## 📊 概览
 
@@ -11,6 +13,7 @@
 | 源码文件 | 55个 |
 | 技术栈 | JavaScript (Node.js ES Modules) |
 | 许可证 | Apache-2.0 |
+| 技能标准 | [agentskills.io](https://agentskills.io) |
 
 ## 🧠 六大核心系统
 
@@ -81,7 +84,21 @@ cp -r . /path/to/openclaw/skills/complete-self-evolution
 
 在 OpenClaw 中即可使用完整自我进化功能。
 
-### 方式二：独立运行
+### 方式二：作为 Hermes Agent 技能安装
+
+将此目录复制到 Hermes Agent 的 `~/.hermes/skills/` 目录下：
+
+```bash
+# 复制到 Hermes Agent skills 目录
+cp -r . ~/.hermes/skills/complete-self-evolution
+```
+
+安装后在 Telegram / Discord / CLI 中使用：
+```
+/complete-self-evolution
+```
+
+### 方式三：独立运行
 
 ```bash
 # 1. 安装依赖
@@ -95,6 +112,13 @@ node tests/test_simple.js
 ```
 
 > ⚠️ 独立运行需要配置 A2A_NODE_ID 环境变量。
+
+## 📦 下载
+
+| 方式 | 链接 | 说明 |
+|------|------|------|
+| GitHub Release | [ZIP 下载](https://github.com/primaxlab/-/releases/download/v4.0/complete-self-evolution-v4.zip) | 139KB，解压即用 |
+| 源码 | https://github.com/primaxlab/- | 直接查看代码 |
 
 ## 🗺️ 路线图
 
