@@ -1,5 +1,8 @@
 # 🧬 完整自我进化系统 v4.0
 
+
+> ⚠️ **注意**：本项目仍在积极开发中，部分功能尚未完善，API 和架构可能会发生变化。欢迎 Star 和 Issue 反馈！
+
 > 整合 evolver-main + self-evolution + self-improving-agent + auto-reflection，实现AI助手完全自治进化。
 > 
 > 兼容 [OpenClaw](https://openclaw.ai) 和 [Hermes Agent](https://hermes-agent.nousresearch.com) 两大平台。
