@@ -1,5 +1,5 @@
 {
-  "name": "complete-self-evolution",
+  "name": "self-evolution",
   "version": "4.0.0",
   "description": "Complete Self Evolution System - 整合 evolver-main, self-evolution, self-improving-agent, auto-reflection",
   "main": "complete_evolution.js",
