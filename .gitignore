@@ -13,6 +13,10 @@ env/
 .coverage
 htmlcov/
 
+# Node / JS
+node_modules/
+*.log
+
 # OS
 .DS_Store
 Thumbs.db
@@ -27,6 +31,11 @@ Thumbs.db
 dist/
 build/
 *.egg
+
+# Env / secrets
+.env
+temp/
+_tmp_*
 
 # Data (runtime generated)
 /tmp/sevo/
