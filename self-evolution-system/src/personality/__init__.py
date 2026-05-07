@@ -1,0 +1,1 @@
+# Empty marker file — src/personality is part of the self-evolution-system

@@ -1,0 +1,265 @@
+# 自我进化系统配置
+
+# 记忆系统配置
+memory:
+  storage_type: "sqlite"  # sqlite | json | vector_db
+  database_path: "data/evolution_memory.db"
+  retention_days: 365
+  compression_enabled: true
+  compression_ratio: 0.3  # 压缩到30%大小
+  
+  # 重要性阈值
+  importance_thresholds:
+    critical: 8
+    high: 6
+    medium: 4
+    low: 2
+  
+  # 清理策略
+  cleanup:
+    enabled: true
+    interval_days: 7
+    min_importance_to_keep: 3
+
+# 学习系统配置
+learning:
+  # 浏览器研究
+  browser_research:
+    enabled: true
+    max_concurrent: 3
+    timeout_seconds: 60
+    sources:
+      - "https://docs.python.org/"
+      - "https://stackoverflow.com/"
+      - "https://github.com/"
+      - "https://docs.openclaw.ai/"
+      - "https://developer.mozilla.org/"
+    
+  # 知识处理
+  knowledge_processing:
+    min_confidence: 0.6
+    verification_required: true
+    max_points_per_domain: 1000
+    compression_enabled: true
+  
+  # 上下文优化
+  context_optimization:
+    enabled: true
+    target_context_size: 150000
+    compression_algorithms:
+      - "summarization"
+      - "deduplication"
+      - "intelligent_compression"
+    
+    # 标记计数优化
+    token_counting:
+      accurate_mode: true
+      cache_results: true
+      validation_enabled: true
+
+# 迭代系统配置
+iteration:
+  # 错误检测
+  error_detection:
+    enabled: true
+    check_interval_minutes: 5
+    severity_levels:
+      - "critical"
+      - "high"
+      - "medium"
+      - "low"
+    
+  # 自动修复
+  auto_fix:
+    enabled: true
+    max_fix_attempts: 3
+    require_confirmation: false
+    
+  # 优化建议
+  optimization_suggestions:
+    enabled: true
+    min_confidence: 0.7
+    auto_apply_low_risk: true
+
+# 人格系统配置
+personality:
+  # 人格特质
+  traits:
+    openness: 0.7
+    conscientiousness: 0.9
+    extraversion: 0.6
+    agreeableness: 0.8
+    neuroticism: 0.3
+    
+  # 语言风格
+  language_style:
+    formality: 0.6
+    humor: 0.4
+    warmth: 0.7
+    empathy: 0.9
+    precision: 0.7
+    
+  # 情绪模拟
+  emotion_simulation:
+    enabled: true
+    valence_range: [-1.0, 1.0]  # 效价范围
+    arousal_range: [0.0, 1.0]   # 唤醒度范围
+    dominance_range: [0.0, 1.0] # 支配感范围
+    
+  # 成长设置
+  growth:
+    development_rate: "moderate"  # slow | moderate | fast
+    consistency_check_interval: "daily"
+
+# 安全系统配置
+safety:
+  # 对齐安全
+  alignment:
+    enabled: true
+    check_interval_minutes: 10
+    violation_threshold: 0.8
+    
+  # 边界控制
+  boundaries:
+    enabled: true
+    strictness: "strict"  # lenient | moderate | strict
+    action_whitelist: []
+    action_blacklist: []
+    
+  # 监控
+  monitoring:
+    enabled: true
+    audit_logging: true
+    realtime_alerts: true
+    alert_channels:
+      - "console"
+      - "log_file"
+    
+  # 紧急制动
+  emergency_brake:
+    enabled: true
+    triggers:
+      - "alignment_violation"
+      - "boundary_breach"
+      - "unexpected_behavior"
+    response: "immediate_suspend"
+
+# 系统集成配置
+integration:
+  # OpenClaw集成
+  openclaw:
+    enabled: true
+    workspace_path: "D:/OpenClaw_Main/workspace"
+    config_files:
+      - "IDENTITY.md"
+      - "USER.md"
+      - "SOUL.md"
+      - "MEMORY.md"
+      - "AGENTS.md"
+    
+  # 技能集成
+  skills:
+    enabled: true
+    auto_load_skills: true
+    skill_directories:
+      - "skills/"
+      - "D:/npm/node_modules/openclaw/skills/"
+    
+  # 工具集成
+  tools:
+    enabled: true
+    available_tools:
+      - "read"
+      - "write"
+      - "edit"
+      - "exec"
+      - "web_search"
+      - "web_fetch"
+
+# 性能配置
+performance:
+  # 缓存设置
+  caching:
+    enabled: true
+    memory_cache_size: 1000
+    disk_cache_size_mb: 100
+    
+  # 并发设置
+  concurrency:
+    max_worker_threads: 4
+    max_io_operations: 10
+    
+  # 资源限制
+  resource_limits:
+    max_memory_mb: 512
+    max_cpu_percent: 50
+    max_disk_space_mb: 1024
+
+# 日志配置
+logging:
+  level: "INFO"  # DEBUG | INFO | WARNING | ERROR
+  destinations:
+    - "file"
+    - "console"
+    
+  # 文件日志
+  file_logging:
+    enabled: true
+    path: "logs/evolution.log"
+    max_size_mb: 10
+    backup_count: 5
+    
+  # 结构化日志
+  structured_logging:
+    enabled: true
+    format: "json"
+    include_context: true
+
+# 监控配置
+monitoring:
+  # 系统健康
+  system_health:
+    enabled: true
+    check_interval_seconds: 60
+    metrics:
+      - "cpu_usage"
+      - "memory_usage"
+      - "disk_usage"
+      - "response_time"
+      
+  # 业务指标
+  business_metrics:
+    enabled: true
+    track:
+      - "learning_tasks_completed"
+      - "knowledge_points_created"
+      - "context_optimizations"
+      - "error_fixes"
+      
+  # 报警
+  alerts:
+    enabled: true
+    thresholds:
+      cpu_usage_percent: 80
+      memory_usage_percent: 85
+      disk_usage_percent: 90
+      response_time_ms: 5000
+
+# 开发配置
+development:
+  # 调试模式
+  debug_mode: false
+  
+  # 测试模式
+  test_mode: false
+  test_database: "test_evolution.db"
+  
+  # 性能分析
+  profiling:
+    enabled: false
+    output_path: "profiling/"
+    
+  # 功能开关
+  feature_flags:
+    enable_experimental_features: false
+    enable_beta_features: false

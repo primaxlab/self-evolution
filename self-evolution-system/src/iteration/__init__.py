@@ -1,0 +1,1 @@
+# Empty marker file — src/iteration is part of the self-evolution-system
