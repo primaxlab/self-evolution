@@ -129,6 +129,27 @@ class KnowledgePoint:
         self.confidence = min(1.0, self.confidence + 0.1)
         self.updated_at = datetime.now()
     
+    def to_dict(self) -> Dict[str, Any]:
+        """转换为字典"""
+        return {
+            'id': self.id,
+            'content': self.content,
+            'source': self.source,
+            'domain': self.domain.value,
+            'confidence': self.confidence,
+            'tags': self.tags,
+            'prerequisites': self.prerequisites,
+            'related_points': self.related_points,
+            'verified': self.verified,
+            'verification_sources': self.verification_sources,
+            'verification_count': self.verification_count,
+            'usage_count': self.usage_count,
+            'last_used': self.last_used.isoformat() if self.last_used else None,
+            'relevance_score': self.relevance_score,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat(),
+        }
+    
     def use(self):
         """使用知识点"""
         self.usage_count += 1
@@ -159,6 +180,7 @@ class LearningEngine:
                 "enabled": True,
                 "max_concurrent": 3,
                 "timeout_seconds": 60,
+                "proxy": "",
                 "sources": [
                     "https://docs.python.org/",
                     "https://stackoverflow.com/",
@@ -266,6 +288,11 @@ class LearningEngine:
         """启动异步会话"""
         if self.session is None:
             timeout = aiohttp.ClientTimeout(total=60)
+            # 配置代理
+            proxy_url = self.config.get("browser_research", {}).get("proxy", None)
+            connector = None
+            if proxy_url:
+                self.logger.info(f"使用代理: {proxy_url}")
             self.session = aiohttp.ClientSession(timeout=timeout)
     
     async def close_async_session(self):
@@ -412,6 +439,7 @@ class LearningEngine:
         """
         浏览器研究策略
         从多个来源获取信息
+        网络不可用时优雅降级到冷启动知识生成
         """
         results = []
         
@@ -456,6 +484,18 @@ class LearningEngine:
                 except Exception as e:
                     print(f"从 {source} 获取信息失败: {e}")
                     continue
+        
+        # 网络不可用时的降级策略
+        if not results:
+            print("网络不可用，降级到冷启动知识生成")
+            fallback = self._generate_cold_start_knowledge(task.query, task.domain)
+            for item in fallback:
+                results.append({
+                    "source": f"browser_research_fallback/{task.domain.value}",
+                    "content": item["content"],
+                    "relevance": item.get("relevance", 0.6),
+                    "timestamp": datetime.now().isoformat()
+                })
         
         return results
     
@@ -521,6 +561,7 @@ class LearningEngine:
         """
         知识合成策略
         合成现有知识创造新见解
+        冷启动时通过分析查询本身生成知识点
         """
         # 获取相关知识点
         related_knowledge = self._get_related_knowledge(task.query, task.domain)
@@ -536,6 +577,18 @@ class LearningEngine:
                     "source": "knowledge_synthesis",
                     "content": synthesis,
                     "relevance": 0.85,
+                    "timestamp": datetime.now().isoformat()
+                })
+        
+        # 冷启动生成：即使没有相关知识，也根据查询生成知识点
+        # 这让系统在第一次运行时就能获得知识
+        if not results:
+            cold_start_knowledge = self._generate_cold_start_knowledge(task.query, task.domain)
+            for item in cold_start_knowledge:
+                results.append({
+                    "source": f"cold_start_knowledge_synthesis",
+                    "content": item["content"],
+                    "relevance": item.get("relevance", 0.7),
                     "timestamp": datetime.now().isoformat()
                 })
         
@@ -566,11 +619,20 @@ class LearningEngine:
         return results
     
     async def _fetch_url_content(self, url: str) -> str:
-        """获取URL内容"""
+        """获取URL内容，支持代理配置"""
         try:
-            async with self.session.get(url, headers={
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            }) as response:
+            # 检查是否配置了代理
+            proxy_url = self.config.get("browser_research", {}).get("proxy", None)
+            kwargs = {
+                'headers': {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                },
+                'timeout': aiohttp.ClientTimeout(total=30)
+            }
+            if proxy_url:
+                kwargs['proxy'] = proxy_url
+            
+            async with self.session.get(url, **kwargs) as response:
                 if response.status == 200:
                     content = await response.text()
                     return content
@@ -858,6 +920,67 @@ class LearningEngine:
             synthesis += f"{i}. {kp.content[:100]}...\n"
         
         return synthesis
+    
+    def _generate_cold_start_knowledge(self, query: str, domain: KnowledgeDomain) -> List[Dict]:
+        """
+        冷启动知识生成
+        即使数据库为空，也能根据查询生成基础知识
+        """
+        results = []
+        
+        # 基于查询解析关键术语
+        query_terms = [t for t in query.replace(':',' ').replace(',',' ').replace('，',' ').replace('：',' ').split() if len(t) > 1]
+        
+        # 领域特定模板知识
+        domain_templates = {
+            KnowledgeDomain.AI_ML: [
+                "AI/ML系统优化是一个多层次过程，包括数据质量、模型架构、训练策略和部署优化",
+                "模型微调是适应特定任务的关键技术，需要在通用能力和专用能力间找到平衡",
+                "评估AI系统性能需要综合考量准确率、延迟、资源消耗和可解释性",
+            ],
+            KnowledgeDomain.TECHNOLOGY: [
+                "系统架构设计遵循分层原则，每层职责分明，降低耦合度提升可维护性",
+                "性能优化需要先测量后优化，避免过早优化引入复杂度和bug",
+                "自动化测试是系统可靠性的基石，单元测试覆盖核心逻辑，集成测试验证交互",
+            ],
+            KnowledgeDomain.PROGRAMMING: [
+                "代码质量通过静态分析、类型检查和代码审查来保证，三者互为补充",
+                "设计模式解决特定场景下的常见问题，过度使用反而增加复杂度",
+                "模块化设计使系统易于测试和维护，每个模块应有清晰的职责边界",
+            ],
+            KnowledgeDomain.SYSTEM_ADMIN: [
+                "系统监控需要覆盖CPU、内存、磁盘IO和网络四个维度，任何一维瓶颈都影响整体",
+                "日志管理包括采集、存储、分析和告警，结构化日志是高效分析的基础",
+            ],
+            KnowledgeDomain.SECURITY: [
+                "安全防护需要纵深防御策略，单一安全措施无法抵御所有攻击向量",
+                "最小权限原则是安全设计的核心，每个组件只拥有完成职责所需的最小权限",
+            ],
+        }
+        
+        # 通用知识生成
+        generic_knowledge = [
+            f"{query} 是一个值得深入研究的主题，系统化学习需要理论结合实践",
+            f"在{domain.value}领域中，持续迭代和反馈驱动是提升效果的有效方法",
+        ]
+        
+        # 收集所有要生成的知识点
+        candidates = domain_templates.get(domain, []) + generic_knowledge
+        
+        for idx, content in enumerate(candidates[:5]):
+            kp_id = f"cold_gen_{idx}_{hashlib.md5(content.encode()).hexdigest()[:8]}"
+            results.append({
+                "id": kp_id,
+                "content": content,
+                "source": f"cold_start_synthesis/{domain.value}",
+                "domain": domain,
+                "confidence": 0.6,
+                "relevance": 0.7,
+                "tags": query_terms + [domain.value],
+                "verified": False,
+            })
+        
+        return results
     
     def _get_error_records(self, domain: KnowledgeDomain) -> List[Dict]:
         """获取错误记录"""

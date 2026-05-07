@@ -28,6 +28,9 @@ learning:
     enabled: true
     max_concurrent: 3
     timeout_seconds: 60
+    # HTTP代理配置（设为空字符串''表示直连）
+    # 示例: 'http://127.0.0.1:7890' 或 'socks5://127.0.0.1:10808'
+    proxy: ''
     sources:
       - "https://docs.python.org/"
       - "https://stackoverflow.com/"
